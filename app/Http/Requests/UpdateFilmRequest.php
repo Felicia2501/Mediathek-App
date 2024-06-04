@@ -24,7 +24,7 @@ class UpdateFilmRequest extends FormRequest
         return [
             //
             'title' => 'required',
-            'time' => 'required',
+            'time' => 'required| decimal 0,2',
             'fsk' => 'required',
             'releasedate' => 'required'
         ];
