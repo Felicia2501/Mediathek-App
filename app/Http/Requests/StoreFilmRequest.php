@@ -24,9 +24,9 @@ class StoreFilmRequest extends FormRequest
         return [
             //
             'title' => 'required',
-            'time' => 'required',
-            'fsk' => 'required',
-            'releasedate' => 'required'
+            'time' => 'required|integer|between:60,400',
+            'fsk' => 'required|in:0,6,12,16,18',
+            'releasedate' => 'required|date'
         ];
     }
 }
