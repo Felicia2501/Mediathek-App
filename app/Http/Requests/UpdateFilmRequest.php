@@ -26,7 +26,8 @@ class UpdateFilmRequest extends FormRequest
             'title' => 'required',
             'time' => 'required|integer|between:60,400',
             'fsk' => 'required|in:0,6,12,16,18',
-            'releasedate' => 'required|date'
+            'releasedate' => 'required|date',
+            'genre_id' => 'nullable'
         ];
     }
 }

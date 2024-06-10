@@ -13,6 +13,7 @@ class Film extends Model
         'title',
         'time',
         'fsk',
-        'releasedate'
+        'releasedate',
+        'genre_id'
     ];
 }
