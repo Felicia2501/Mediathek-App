@@ -9,7 +9,7 @@
     @endif
 
 
-    <form action="{{ route('films.update', $sub) }}" method="POST">
+    <form action="{{ route('genres.update', $sub) }}" method="POST">
         @method('PUT')
         @csrf
         <table class="table">
@@ -20,11 +20,11 @@
                 <td>{{ $sub->id }}</td>
             </tr>
             <tr>
-                <td>Titel</td>
-                <td><input type="text" name="title" value="{{ $sub->title }}"/>
-                @if($errors->has('title'))
-                @foreach($errors-> get('title') as $error)
-                    <span class="text-danger">{{ $errors->get('title') }}
+                <td>Name</td>
+                <td><input type="text" name="name" value="{{ $sub->name }}"/>
+                @if($errors->has('name'))
+                @foreach($errors-> get('name') as $error)
+                    <span class="text-danger">{{ $errors->get('name') }}
                 @endforeach
                 @endif
                 </td>

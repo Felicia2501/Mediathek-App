@@ -33,9 +33,9 @@ class GenreController extends Controller
         //
 
        $gnr = new Genre();
-       $gnr->title = $request['title'];
+       $gnr->name = $request['name'];
        $gnr->save();
-       return redirect()->route('genre.index');
+       return redirect()->route('genres.index');
     }
 
     /**

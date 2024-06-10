@@ -6,18 +6,26 @@
 <table class="table-bordered">
     <tr>
         <th>Name</th>
+        <th>Filme</th>
     </tr>
 
     @foreach ($gnrs as $gnr)
     <tr>
         <td>{{ $gnr -> name }}</td>
+        <td>
+<ul>
+    @foreach ($gnr->films as $gnr)
+        <li>{{ $gnr->title }}</li>
+    @endforeach
+</ul>
+        </td>
     </tr>
     @endforeach
 </table>
 
 <hr>
 
-<form action=„{{ route( 'genres.store') }}“ method="POST">
+<form action="{{ route( 'genres.store') }}" method="POST">
     @csrf
     <div class="form-group">
     <label for="title">Genre Name</label>

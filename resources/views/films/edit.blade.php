@@ -61,15 +61,33 @@
             </div>
         </div>
 
+
+
+
         <div class="mb-3 row">
-            <label for="genre" class="col-md-4 col-form-label text-md-end text-start">Genre</label>
-            <div class="col-md-6">
-                <input type="text" class="form-control @error('genre') is-invalid @enderror" id="genre" name="genre" value="{{ $sub->genre }}">
-                @if ($errors->has('genre'))
-                <span class="text-danger">{{ $errors->first('genre') }}</span>
-                @endif
-            </div>
-        </div>
+    <label for="genre_id" class="col-md-4 col-form-label text-md-end text-start">Genre</label>
+    <div class="col-md-6">
+        <!-- Verwenden Sie ein verstecktes Eingabefeld für die genre_id -->
+        <input type="hidden" name="genre_id" value="{{ $sub->genre_id }}">
+
+        <!-- Dropdown-Menü für Genre -->
+        <select class="form-select @error('genre_id') is-invalid @enderror" name="genre_id">
+            <option value="">Bitte wählen...</option>
+            @foreach($gnrs as $gnr)
+                <option value="{{ $gnr->id }}" @if($gnr->id == $sub->genre_id) selected @endif>{{ $gnr->name }}</option>
+            @endforeach
+        </select>
+
+        <!-- Fehlermeldung anzeigen, wenn genre_id ungültig ist -->
+        @error('genre_id')
+            <span class="invalid-feedback" role="alert">{{ $message }}</span>
+        @enderror
+    </div>
+</div>
+
+
+
+
 
         <div class="mb-3 row">
             <label for="created_at" class="col-md-4 col-form-label text-md-end text-start">Created At</label>
@@ -85,9 +103,9 @@
             </div>
         </div>
     
-        <div class="mb-3 row">
-            <input type="submit" name="submit" value="speichern"/>
-        </div>
+        
+        <input type="submit" name="submit" value="speichern"/>
+        
 
     </div>
 </form>

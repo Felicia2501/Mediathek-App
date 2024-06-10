@@ -6,6 +6,8 @@ use App\Http\Requests\StoreFilmRequest;
 use App\Http\Requests\UpdateFilmRequest;
 use App\Models\Film;
 
+use App\Models\Genre;
+
 class FilmController extends Controller
 {
     /**
@@ -55,7 +57,7 @@ class FilmController extends Controller
     public function edit(Film $film)
     {
         //
-        return view('films.edit', ['sub' => $film]);
+        return view('films.edit', ['sub' => $film,'gnrs'=>Genre::all()]);
     }
 
     /**

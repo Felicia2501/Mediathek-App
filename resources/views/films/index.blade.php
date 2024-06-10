@@ -8,6 +8,7 @@
             <th>Laufzeit</th>
             <th>FSK</th>
             <th>Veröffentlichung</th>
+            <th>Genre</th>
             <th>Aktionen</th>
         </tr>
 
@@ -19,8 +20,20 @@
                 <td>{{ $sub->time }}</td>
                 <td>{{ $sub->fsk }}</td>
                 <td>{{ $sub->releasedate }}</td>
-                <td><a href={{ route('films.show', $sub) }}>Details
-                        | <a href={{ route('films.edit', $sub) }}>Bearbeiten</a></td>
+                <td>
+    @if ($sub->genre)
+        {{ $sub->genre->name }}
+    @else
+        
+    @endif
+</td>
+
+                
+                <td>
+    <a href="{{ route('films.show', $sub) }}">Details</a> | 
+    <a href="{{ route('films.edit', $sub) }}">Bearbeiten</a>
+</td>
+
             </tr>
         @endforeach
     </table>

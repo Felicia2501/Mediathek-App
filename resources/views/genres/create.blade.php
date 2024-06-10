@@ -10,7 +10,7 @@
     @endif
 
 
-    <form action="{{ route('films.store') }}" method="POST">
+    <form action="{{ route('genres.store') }}" method="POST">
        
         @csrf
         <table class="table">
