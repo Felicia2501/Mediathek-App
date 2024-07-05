@@ -1,61 +1,109 @@
 @extends('layouts.app')
+
 @section('content')
+<div class="d-flex justify-content-center">
     <h2>{{ $sub->title }}</h2>
-    @if(session()->has('message'))
-        <div class="alert alert-success">
-            {{ session()->get('message') }}
+</div>
 
+@if(session()->has('message'))
+    <div class="alert alert-success text-center">
+        {{ session()->get('message') }}
+    </div>
+@endif    
+
+<form action="{{ route('films.update', $sub->id) }}" method="POST" class="w-75 mx-auto">
+    @csrf
+    @method('PUT')
+
+    <div class="mb-3 row">
+        <label for="code" class="col-md-4 col-form-label text-md-end text-start">Id</label>
+        <div class="col-md-6">
+            <p>{{ $sub->id }}</p>
         </div>
-    @endif
+    </div>
+    
+    <div class="mb-3 row">
+        <label for="title" class="col-md-4 col-form-label text-md-end text-start">Titel</label>
+        <div class="col-md-6">
+            <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ $sub->title }}">
+            @error('title')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+    </div>
+    
+    <div class="mb-3 row">
+        <label for="time" class="col-md-4 col-form-label text-md-end text-start">Laufzeit</label>
+        <div class="col-md-6">
+            <input type="text" class="form-control @error('time') is-invalid @enderror" id="time" name="time" value="{{ $sub->time }}">
+            @error('time')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+    </div>
 
+    <div class="mb-3 row">
+        <label for="fsk" class="col-md-4 col-form-label text-md-end text-start">FSK</label>
+        <div class="col-md-6">
+            <input type="text" class="form-control @error('fsk') is-invalid @enderror" id="fsk" name="fsk" value="{{ $sub->fsk }}">
+            @error('fsk')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+    </div>
 
-    <form action="{{ route('films.update', $sub) }}" method="POST">
-        @method('PUT')
-        @csrf
-        <table class="table">
+    <div class="mb-3 row">
+        <label for="releasedate" class="col-md-4 col-form-label text-md-end text-start">Veröffentlichung</label>
+        <div class="col-md-6">
+            <input type="text" class="form-control @error('releasedate') is-invalid @enderror" id="releasedate" name="releasedate" value="{{ $sub->releasedate }}">
+            @error('releasedate')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+    </div>
 
+    <div class="mb-3 row">
+        <label for="genre_id" class="col-md-4 col-form-label text-md-end text-start">Genre</label>
+        <div class="col-md-6">
+            <!-- Verwenden Sie ein verstecktes Eingabefeld für die genre_id -->
+            <input type="hidden" name="genre_id" value="{{ $sub->genre_id }}">
 
-            <tr>
-                <td>Id</td>
-                <td>{{ $sub->id }}</td>
-            </tr>
-            <tr>
-                <td>Titel</td>
-                <td><input type="text" name="title" value="{{ $sub->title }}"/>
-                @if($errors->has('title'))
-                @foreach($errors-> get('title') as $error)
-                    <span class="text-danger">{{ $errors->get('title') }}
+            <!-- Dropdown-Menü für Genre -->
+            <select class="form-select @error('genre_id') is-invalid @enderror" name="genre_id">
+                <option value="">Bitte wählen...</option>
+                @foreach($gnrs as $gnr)
+                    <option value="{{ $gnr->id }}" @if($gnr->id == $sub->genre_id) selected @endif>{{ $gnr->name }}</option>
                 @endforeach
-                @endif
-                </td>
-            </tr>
-            <tr>
-                <td>Laufzeit</td>
-                <td><input type="text" name="time" value="{{ $sub->time }}"/></td>
-            <tr>
-                <td>FSK</td>
-                <td><input type="text" name="fsk" value="{{ $sub->fsk }}"/></td>
-            </tr>
-            <tr>
-                <td>releasedate</td>
-                <td><input type="text" name="releasedate" value="{{ $sub->releasedate }}"/></td>
-            </tr>
-            <tr>
-                <td>Created At</td>
-                <td>{{ $sub->created_at }}</td>
-            </tr>
-            <tr>
-                <td>Updated At</td>
-                <td>{{ $sub->updated_at }}</td>
-            </tr>
+            </select>
 
-        </table>
-        <input type="submit" name="submit" value="submit"/>
-    </form>
+            <!-- Fehlermeldung anzeigen, wenn genre_id ungültig ist -->
+            @error('genre_id')
+                <span class="invalid-feedback" role="alert">{{ $message }}</span>
+            @enderror
+        </div>
+    </div>
 
+    <div class="mb-3 row">
+        <label for="created_at" class="col-md-4 col-form-label text-md-end text-start">Created At</label>
+        <div class="col-md-6">
+            <p>{{ $sub->created_at }}</p>
+        </div>
+    </div>
 
-    @if ($errors->any())
-    <div class="alert alert-danger">
+    <div class="mb-3 row">
+        <label for="updated_at" class="col-md-4 col-form-label text-md-end text-start">Updated At</label>
+        <div class="col-md-5">
+            {{ $sub->updated_at }}
+        </div>
+    </div>
+    
+    <div class="container d-flex justify-content-center">
+        <button type="submit" name="submit" class="btn btn-primary">Speichern</button>
+    </div>
+</form>
+
+@if ($errors->any())
+    <div class="alert alert-danger mt-3">
         <ul>
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
